@@ -13,7 +13,7 @@ class HeroSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Ciao Marco, dove vuoi andare oggi?',
+            'Ciao Marco, organizza la tua prossima trasferta.',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w600,
