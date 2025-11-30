@@ -1,0 +1,5 @@
+{
+    "buildCommand": "if [ ! -d \"flutter\" ]; then git clone https://github.com/flutter/flutter.git -b stable; fi && ./flutter/bin/flutter doctor && ./flutter/bin/flutter clean && ./flutter/bin/flutter config --enable-web && ./flutter/bin/flutter build web --release",
+    "outputDirectory": "build/web",
+    "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
+}
