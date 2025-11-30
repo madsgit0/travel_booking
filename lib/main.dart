@@ -14,7 +14,7 @@ class TravelBookingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Prenotazione Trasferte',
+      title: 'coordina | Easy plan',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.light(
