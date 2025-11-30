@@ -46,32 +46,70 @@ class SearchFiltersBar extends StatelessWidget {
           const SizedBox(height: 12),
           
           // Campi ricerca
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: _buildSearchInput(Icons.flight_takeoff, from),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(Icons.swap_horiz, color: Colors.grey.shade400),
-              ),
-              Expanded(
-                flex: 2,
-                child: _buildSearchInput(Icons.flight_land, to),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    Expanded(child: _buildSearchInput(Icons.calendar_today, dateFormat.format(departDate), isDate: true)),
-                    const SizedBox(width: 8),
-                    Expanded(child: _buildSearchInput(Icons.calendar_today, dateFormat.format(returnDate), isDate: true)),
-                  ],
-                ),
-              ),
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final isMobile = constraints.maxWidth < 900;
+              
+              if (isMobile) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 160,
+                        child: _buildSearchInput(Icons.flight_takeoff, from),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Icon(Icons.swap_horiz, color: Colors.grey.shade400),
+                      ),
+                      SizedBox(
+                        width: 160,
+                        child: _buildSearchInput(Icons.flight_land, to),
+                      ),
+                      const SizedBox(width: 16),
+                      SizedBox(
+                        width: 130,
+                        child: _buildSearchInput(Icons.calendar_today, dateFormat.format(departDate), isDate: true),
+                      ),
+                      const SizedBox(width: 8),
+                      SizedBox(
+                        width: 130,
+                        child: _buildSearchInput(Icons.calendar_today, dateFormat.format(returnDate), isDate: true),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              
+              return Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: _buildSearchInput(Icons.flight_takeoff, from),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(Icons.swap_horiz, color: Colors.grey.shade400),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: _buildSearchInput(Icons.flight_land, to),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 3,
+                    child: Row(
+                      children: [
+                        Expanded(child: _buildSearchInput(Icons.calendar_today, dateFormat.format(departDate), isDate: true)),
+                        const SizedBox(width: 8),
+                        Expanded(child: _buildSearchInput(Icons.calendar_today, dateFormat.format(returnDate), isDate: true)),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
           
           const SizedBox(height: 16),

@@ -32,73 +32,94 @@ class SearchResultsPage extends StatelessWidget {
             returnDate: returnDate,
           ),
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(32),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Colonna 1: Voli (30%)
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        FlightSummaryCard(
-                          label: 'ANDATA',
-                          date: '30 nov',
-                          departureTime: '14:15',
-                          arrivalTime: '15:50',
-                          departureAirport: 'BRI',
-                          arrivalAirport: 'BGY',
-                          duration: '1h 35',
-                          onAlternativesTap: () => showFlightAlternatives(context, 'Andata'),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 900;
+                
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(32),
+                  child: isMobile
+                      ? Column(
+                          children: [
+                            // Mobile Layout: Stacked
+                            _buildFlightsColumn(context),
+                            const SizedBox(height: 32),
+                            _buildHotelsColumn(context),
+                            const SizedBox(height: 32),
+                            const PackageTotalCard(),
+                          ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Desktop Layout: Side by side
+                            Expanded(
+                              flex: 3,
+                              child: _buildFlightsColumn(context),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              flex: 4,
+                              child: _buildHotelsColumn(context),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              flex: 3,
+                              child: const PackageTotalCard(),
+                            ),
+                          ],
                         ),
-                        FlightSummaryCard(
-                          label: 'RITORNO',
-                          date: '3 dic',
-                          departureTime: '11:40',
-                          arrivalTime: '13:15',
-                          departureAirport: 'BGY',
-                          arrivalAirport: 'BRI',
-                          duration: '1h 35',
-                          onAlternativesTap: () => showFlightAlternatives(context, 'Ritorno'),
-                          marginBottom: 0,
-                        ),
-                        const SizedBox(height: 32),
-                        _buildPriceSummary('€105 a persona', '€420'),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  
-                  // Colonna 2: Hotel (40%)
-                  Expanded(
-                    flex: 4,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 282, // Altezza fissa per allineare con le due card volo
-                          child: HotelSummaryCard(
-                            onAlternativesTap: () => showHotelAlternatives(context),
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        _buildPriceSummary('€123 a notte', '€492'),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 24),
-                  
-                  // Colonna 3: Totale (30%)
-                  Expanded(
-                    flex: 3,
-                    child: const PackageTotalCard(),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildFlightsColumn(BuildContext context) {
+    return Column(
+      children: [
+        FlightSummaryCard(
+          label: 'ANDATA',
+          date: '30 nov',
+          departureTime: '14:15',
+          arrivalTime: '15:50',
+          departureAirport: 'BRI',
+          arrivalAirport: 'BGY',
+          duration: '1h 35',
+          onAlternativesTap: () => showFlightAlternatives(context, 'Andata'),
+        ),
+        FlightSummaryCard(
+          label: 'RITORNO',
+          date: '3 dic',
+          departureTime: '11:40',
+          arrivalTime: '13:15',
+          departureAirport: 'BGY',
+          arrivalAirport: 'BRI',
+          duration: '1h 35',
+          onAlternativesTap: () => showFlightAlternatives(context, 'Ritorno'),
+          marginBottom: 0,
+        ),
+        const SizedBox(height: 32),
+        _buildPriceSummary('€105 a persona', '€420'),
+      ],
+    );
+  }
+
+  Widget _buildHotelsColumn(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 282,
+          child: HotelSummaryCard(
+            onAlternativesTap: () => showHotelAlternatives(context),
+          ),
+        ),
+        const SizedBox(height: 32),
+        _buildPriceSummary('€123 a notte', '€492'),
+      ],
     );
   }
 
