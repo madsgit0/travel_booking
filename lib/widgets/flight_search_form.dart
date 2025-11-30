@@ -73,6 +73,7 @@ class _FlightSearchFormState extends State<FlightSearchForm> {
 
         return Container(
           constraints: const BoxConstraints(maxWidth: 900),
+          margin: EdgeInsets.symmetric(horizontal: constraints.maxWidth < 900 ? 16 : 0),
           padding: isMobile 
               ? const EdgeInsets.symmetric(horizontal: 16, vertical: 20)
               : const EdgeInsets.all(32),
